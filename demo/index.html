@@ -7,23 +7,11 @@
       background: #fafafa;
     }
   </style>
+  <script type="module" src="../dist/vega-widget.js"></script>
 </head>
 <body>
-  <div id="demo"></div>
-
-  <script type="module">
-    import { html, render } from 'lit-html';
-    import '../dist/vega-widget.js';
-
-    const title = 'Hello owc World!';
-    render(
-      html`
-        <vega-widget .title=${title}>
-          some more light-dom
-        </vega-widget>
-      `,
-      document.querySelector('#demo')
-    );
-  </script>
+  <div id="demo">
+    <vega-widget></vega-widget>
+  </div>
 </body>
 </html>
