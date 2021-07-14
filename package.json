@@ -1,9 +1,12 @@
 {
   "name": "vega-widget",
   "version": "0.0.0",
-  "description": "Webcomponent vega-widget following open-wc recommendations",
-  "author": "vega-widget",
-  "license": "MIT",
+  "description": "HTML custom element for displaying Vega/Vega-Lite visualisations",
+  "author": "Anderson Bravalheri",
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/abravalheri/vega-widget",
+  "bugs": "https://github.com/abravalheri/vega-widget/discussions",
+  "repository": "github:abravalheri/vega-widget",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
