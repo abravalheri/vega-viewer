@@ -1,26 +1,16 @@
-import { html, css, LitElement, property } from 'lit-element';
+import { property } from './property.js';
 
-export class VegaWidget extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      padding: 25px;
-      color: var(--vega-widget-text-color, #000);
-    }
-  `;
+export class VegaWidget extends HTMLElement {
+  @property spec: null | String = null;
 
-  @property({ type: String }) title = 'Hey there';
+  @property data: null | String = null;
 
-  @property({ type: Number }) counter = 5;
+  @property stream: null | String = null;
 
-  __increment() {
-    this.counter += 1;
-  }
+  @property embedOptions: null | String = null;
 
-  render() {
-    return html`
-      <h2>${this.title} Nr. ${this.counter}!</h2>
-      <button @click=${this.__increment}>increment</button>
-    `;
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
   }
 }
