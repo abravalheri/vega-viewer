@@ -18,14 +18,13 @@
     "storybook:build": "tsc && build-storybook"
   },
   "dependencies": {
-    "lit-element": "^2.5.1",
-    "lit-html": "^1.4.1",
     "vega": "5",
     "vega-embed": "6",
     "vega-expression": "4",
     "vega-lite": "5"
   },
   "devDependencies": {
+    "@open-wc/dev-server-hmr": "^0.1.1",
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "^2.5.33",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
