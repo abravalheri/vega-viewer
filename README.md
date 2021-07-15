@@ -1,4 +1,4 @@
-# \<vega-widget>
+# \<vega-viewer>
 
 | **[UNDER DEVELOPMENT]** HTML custom element for displaying Vega/Vega-Lite visualisations
 
@@ -6,34 +6,34 @@
 ## Installation
 
 ```bash
-yarn add vega-widget
+yarn add vega-viewer
 # OR
-npm install vega-widget
+npm install vega-viewer
 ```
 
 ## Usage
 
-You will need to import `vega-widget` JavaScript into your HTML to be able to
+You will need to import `vega-viewer` JavaScript into your HTML to be able to
 use the custom element:
 
 ```html
 <script type="module">
-  import 'vega-widget/vega-widget.js';
+  import 'vega-viewer/vega-viewer.js';
 </script>
 ```
 
 Once you do that, you are free to use our declarative API:
 
 ```html
-<vega-widget spec="https://..."></vega-widget>
+<vega-viewer spec="https://..."></vega-viewer>
 ```
 
 ### Parameters
 
-`<vega-widget>` is a wrapper around the [`vega-embed`](https://github.com/vega/vega-embed) library.
+`<vega-viewer>` is a wrapper around the [`vega-embed`](https://github.com/vega/vega-embed) library.
 This means that it also accepts the same [parameters](https://github.com/vega/vega-embed#api-reference),
 as well as two extra ones (marked with `*` in the table bellow).
-Some of these arguments can be defined as attributes directly in the `<vega-widget>` tag,
+Some of these arguments can be defined as attributes directly in the `<vega-viewer>` tag,
 others can be defined via a child `<script>` that marked with a custom `data-*` attribute, as indicated in the table bellow:
 
 | Parameter  | Attribute | Script tag marking | Description |
@@ -46,7 +46,7 @@ others can be defined via a child `<script>` that marked with a custom `data-*` 
 Example:
 
 ```html
-<vega-widget spec="https://localhost:8888/my-vega-lite-chart.json"
+<vega-viewer spec="https://localhost:8888/my-vega-lite-chart.json"
              stream="https://localhost:8888/realtime-changes">
 
   <!-- `data` parameter, assumes `spec.data` is defined as {"name": "points"} -->
@@ -65,12 +65,12 @@ Example:
   <script data-embed-options type="application/json">
     {"theme": "quartz", "actions": false}
   </script>
-</vega-widget>
+</vega-viewer>
 ```
 
 When defined as an attribute, the given parameter should necessarily correspond
 to a URL from which the equivalent JSON payload can be downloaded (*it is an*
-**error** *to assign a serialised JSON object to `<vega-widget>` attributes*).
+**error** *to assign a serialised JSON object to `<vega-viewer>` attributes*).
 On the other hand, when defined via a child script tags, the given parameter should necessarily
 correspond to a JavaScript object (*it is an* **error** *to use URLs with the script tags*)
 
@@ -84,7 +84,7 @@ corresponding JavaScript object.
 This means that the previous example could also be written as:
 
 ```html
-<vega-widget spec="https://localhost:8888/my-vega-lite-chart.json"
+<vega-viewer spec="https://localhost:8888/my-vega-lite-chart.json"
              stream="https://localhost:8888/realtime-changes">
 
   <!-- `data` parameter, assumes `spec.data` is defined as {"name": "points"} -->
@@ -105,13 +105,13 @@ This means that the previous example could also be written as:
       return {"theme": "quartz", "actions": false};
     }
   </script>
-</vega-widget>
+</vega-viewer>
 ```
 
 
 ### Dynamically Changing the Visualisation
 
-`<vega-widget>` provides the following method for changing the embedded visualisation:
+`<vega-viewer>` provides the following method for changing the embedded visualisation:
 
 | Method      | Argument type  | Description |
 | ----------- | -------------- | ----------- |
@@ -189,7 +189,7 @@ serialised functions cannot be used.
 
 ## Making Changes & Contributing
 
-`vega-widget` development was bootstrap using [open-wc](https://github.com/open-wc/open-wc) 
+`vega-viewer` development was bootstrap using [open-wc](https://github.com/open-wc/open-wc) 
 tools and recommendations, please check their docs for more information.
 
 `yarn` (version 1) is used main tool driver, and custom commands are defined

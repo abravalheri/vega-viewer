@@ -7,7 +7,6 @@ export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
   nodeResolve: true,
   open: '/demo/',
   watch: !hmr,
-  hostname: "0.0.0.0",
   port: 8888,
 
   /** Compile JS for older browsers. Requires @web/dev-server-esbuild plugin */

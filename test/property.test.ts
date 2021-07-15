@@ -1,16 +1,14 @@
 import { expect } from '@open-wc/testing';
 
-import { dasherize, property } from '../src/property';
-
+import { dasherize, property } from '../src/property.js';
 
 describe('dasherize', () => {
   it('splits on capitals and join the lowercase version with dashes', () => {
-    expect(dasherize('VegaWidget')).to.equal('vega-widget');
-    expect(dasherize('vegaWidget')).to.equal('vega-widget');
-    expect(dasherize('vegaWidgetMoreWords')).to.equal('vega-widget-more-words');
+    expect(dasherize('VegaViewer')).to.equal('vega-viewer');
+    expect(dasherize('vegaViewer')).to.equal('vega-viewer');
+    expect(dasherize('vegaViewerMoreWords')).to.equal('vega-viewer-more-words');
   });
 });
-
 
 describe('property', () => {
   class MyElement extends HTMLElement {

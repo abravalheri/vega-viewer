@@ -16,10 +16,10 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   // },
 
   /** Amount of browsers to run concurrently */
-  // concurrentBrowsers: 1,
+  // concurrentBrowsers: 3,
 
   /** Amount of test files per browser to test concurrently */
-  // concurrency: 1,
+  // concurrency: 3,
 
   /** Browsers to run tests on */
   browsers: [

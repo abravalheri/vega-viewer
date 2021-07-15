@@ -1,6 +1,6 @@
 import { property } from './property.js';
 
-export class VegaWidget extends HTMLElement {
+export class VegaViewer extends HTMLElement {
   @property spec: null | String = null;
 
   @property data: null | String = null;

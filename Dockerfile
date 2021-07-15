@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.2
 FROM mcr.microsoft.com/playwright:focal
 
 ENV YARN_CACHE_FOLDER="/cache/.yarn"
@@ -12,8 +11,6 @@ EXPOSE 8888
 WORKDIR /code
 
 RUN ln -s /staging/node_modules node_modules
-
-COPY *.json *.mjs ./
 
 ENTRYPOINT ["/usr/bin/yarn", "run"]
 CMD ["start"]

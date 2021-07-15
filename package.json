@@ -1,12 +1,12 @@
 {
-  "name": "vega-widget",
+  "name": "vega-viewer",
   "version": "0.0.0",
   "description": "HTML custom element for displaying Vega/Vega-Lite visualisations",
   "author": "Anderson Bravalheri",
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/abravalheri/vega-widget",
-  "bugs": "https://github.com/abravalheri/vega-widget/discussions",
-  "repository": "github:abravalheri/vega-widget",
+  "homepage": "https://github.com/abravalheri/vega-viewer",
+  "bugs": "https://github.com/abravalheri/vega-viewer/discussions",
+  "repository": "github:abravalheri/vega-viewer",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {

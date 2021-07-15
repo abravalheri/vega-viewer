@@ -1,11 +1,11 @@
 import { fixture, expect, html } from '@open-wc/testing';
 
-import { VegaWidget } from '../src/VegaWidget.js';
-import '../vega-widget.js';
+import { VegaViewer } from '../src/VegaViewer.js';
+import '../vega-viewer.js';
 
-describe('VegaWidget', () => {
+describe('VegaViewer', () => {
   it('has null properties by default', async () => {
-    const el: VegaWidget = await fixture(html`<vega-widget></vega-widget>`);
+    const el: VegaViewer = await fixture(html`<vega-viewer></vega-viewer>`);
     expect(el.spec).to.not.exist;
     expect(el.data).to.not.exist;
     expect(el.stream).to.not.exist;

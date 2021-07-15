@@ -1,1 +1,1 @@
-export { VegaWidget } from './src/VegaWidget.js';
+export { VegaViewer } from './src/VegaViewer.js';

@@ -1,12 +1,25 @@
 #!/usr/bin/env sh
 
-docker build -t vega-widget-dev .
+DOCKER_BUILDKIT=1 docker build -t vega-viewer-dev .
+
+find_shareable_files() {
+  find . -maxdepth 1 -type f -and \( -name '*.json' -or -name '*.mjs' -or -name '*.ts' \) -printf "%f\n"
+}
+
+specify_mounts() {
+  xargs -ifile -- echo "--mount type=bind,source=$(pwd)/file,target=/code/file"
+}
+
+extra_mount_arguments() {
+  find_shareable_files | specify_mounts | paste -sd ' '
+}
+
 docker run \
   -it --rm --ipc=host \
   -p 8888:8888 \
   --mount "type=bind,source=$(pwd)/src,target=/code/src" \
   --mount "type=bind,source=$(pwd)/test,target=/code/test" \
-  --mount "type=bind,source=$(pwd)/index.ts,target=/code/index.ts" \
-  --mount "type=bind,source=$(pwd)/vega-widget.ts,target=/code/vega-widget.ts" \
+  --mount "type=bind,source=$(pwd)/demo,target=/code/demo" \
   --mount "type=bind,source=$(pwd)/yarn.lock,target=/code/yarn.lock" \
-  vega-widget-dev "$@"
+  $(extra_mount_arguments) \
+  vega-viewer-dev "$@"
