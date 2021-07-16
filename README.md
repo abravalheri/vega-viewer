@@ -30,35 +30,55 @@ Once you do that, you are free to use our declarative API:
 
 ### Parameters
 
-`<vega-viewer>` is a wrapper around the [`vega-embed`](https://github.com/vega/vega-embed) library.
-This means that it also accepts the same [parameters](https://github.com/vega/vega-embed#api-reference),
-as well as two extra ones (marked with `*` in the table bellow).
-Some of these arguments can be defined as attributes directly in the `<vega-viewer>` tag,
-others can be defined via a child `<script>` that marked with a custom `data-*` attribute, as indicated in the table bellow:
+`<vega-viewer>` is a wrapper around the [`vega-embed`] library.
+This means that it also accepts the same [parameters], as well as two extra
+ones introduced by `<vega-viewer>`: `data` and `remote-control`.
 
-| Parameter  | Attribute | Script tag marking | Description |
-| ---------- | --------- | ------------------ | ----------- |
-| spec       | spec      | data-vega-spec     | [Vega or Vega-Lite](https://vega.github.io/vega-lite/docs/spec.html) JSON specification |
-| options    | ---       | data-embed-options | [options for `vega-embed`](https://github.com/vega/vega-embed#options) |
-| data `*`   | data      | data-named-values  | When `spec` uses [named data sources](https://vega.github.io/vega-lite/docs/data.html#named), `data` will be used to populate the data values |
-| stream `*` | stream    | ---                | URL that will be used to listen to [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) |
+| Parameter        | Description                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| `spec`           | [vega or] [vega-lite JSON specification]                                                      |
+| `options`        | [options for `vega-embed`]                                                                    |
+| `data`           | When `spec` uses [named data sources], `data` will be used to populate it via [`view.insert`] |
+| `remote-control` | Data stream with instructions to modify the visualization                                     |
+
+There are two main ways to define these parameters: via HTML attributes in the
+`<vega-viwer>` element or with nested `<script>` tags marked with some
+specific `data-*` HTML attributes. Some of the parameters can be specified both
+ways (although with slightly different behaviour), and other can be specified
+in only one way.
+
+The following parameters can be defined as attributes directly in the custom
+element:
+
+| Parameter        | `<vega-viwer>` attribute | Behaviour                                                             |
+| --------------   | ------------------------ | --------------------------------------------------------------------- |
+| `spec`           | `spec`                   | URL from where to download the JSON specification                     |
+| `data`           | `data-load`              | `data-load` specifies the URL from where to download the data. An additional `data-name` can also specify which of the [named data sources] is being populated (`data-name="data"` by default) |
+| `remote-control` | `remote-control`         | URL that will be used to listen to [server-sent events]               |
+
+The following parameters can be defined as contents of nested `<script>` tags
+
+| Parameter        | child `<script>` attribute | Behaviour                                                      |
+| ---------------- | ---------------------------|--------------------------------------------------------------- |
+| `spec`           | `data-vega-spec`           | The content of the `<script>` tag will be used as JSON spec    |
+| `options`        | `data-embed-options`       | The content of the `<script>` tag will be used as JSON config  |
+| `data`           | `data-values`              | The content of the `<script>` tag will be used as data values. An additional `data-name` can also specify which of the [named data sources] is being populated (`data-name="data"` by default) |
+
 
 Example:
 
 ```html
 <vega-viewer spec="https://localhost:8888/my-vega-lite-chart.json"
-             stream="https://localhost:8888/realtime-changes">
+             remote-control="https://localhost:8888/realtime-changes">
 
   <!-- `data` parameter, assumes `spec.data` is defined as {"name": "points"} -->
-  <script data-named-values type="application/json">
-    {
-      "points": [
-        {"x": 0, "y": 0},
-        {"x": 1, "y": 1},
-        {"x": 2, "y": 4},
-        {"x": 3, "y": 9},
-      ]
-    }
+  <script data-values data-name="points" type="application/json">
+    [
+      {"x": 0, "y": 0},
+      {"x": 1, "y": 1},
+      {"x": 2, "y": 4},
+      {"x": 3, "y": 9},
+    ]
   </script>
 
   <!-- `options` parameter -->
@@ -68,19 +88,13 @@ Example:
 </vega-viewer>
 ```
 
-When defined as an attribute, the given parameter should necessarily correspond
-to a URL from which the equivalent JSON payload can be downloaded (*it is an*
-**error** *to assign a serialised JSON object to `<vega-viewer>` attributes*).
-On the other hand, when defined via a child script tags, the given parameter should necessarily
-correspond to a JavaScript object (*it is an* **error** *to use URLs with the script tags*)
+Please notice that the value of child `<script>` tags will be interpreted as
+[*pure JSON objects*], even if they don't explicit set the `type="application/json"`.
 
-Please notice child `<script>` tags with parameters will be interpreted as *pure
-JSON objects*, even if they don't explicit set the `type="application/json"`.
-To provide full-blown JavaScript objects (that might even contain functions as
-properties, which is very useful specially for the `options` parameter), you
-can specify a function identifier as the value of the `data-*` attribute.
-This function should be globally defined, expect no arguments and return the
-corresponding JavaScript object.
+If a full-blown JavaScript object is absolutely required (e.g., `options` might
+need functions as properties), you can specify a function identifier as the
+value of the `data-*` attribute. This function should be globally defined,
+expect no arguments and return the corresponding JavaScript object.
 This means that the previous example could also be written as:
 
 ```html
@@ -88,15 +102,13 @@ This means that the previous example could also be written as:
              stream="https://localhost:8888/realtime-changes">
 
   <!-- `data` parameter, assumes `spec.data` is defined as {"name": "points"} -->
-  <script data-named-values type="application/json">
-    {
-      "points": [
-        {"x": 0, "y": 0},
-        {"x": 1, "y": 1},
-        {"x": 2, "y": 4},
-        {"x": 3, "y": 9},
-      ]
-    }
+  <script data-values data-name="points" type="application/json">
+    [
+      {"x": 0, "y": 0},
+      {"x": 1, "y": 1},
+      {"x": 2, "y": 4},
+      {"x": 3, "y": 9},
+    ]
   </script>
 
   <!-- `options` parameter -->
@@ -115,8 +127,8 @@ This means that the previous example could also be written as:
 
 | Method      | Argument type  | Description |
 | ----------- | -------------- | ----------- |
-| change      | `DataChange`   | Dynamically add or remove points to/from the chart (wrapper around [`view.change`](https://vega.github.io/vega/docs/api/view/#view_change)) |
-| rerender    | `Rerender`     | Redraw the chart, possibly changing `spec` and other parameters |
+| change      | `DataChange`   | Dynamically add or remove points to/from the chart (wrapper around [`view.change`]) |
+| rerender    | `Rerender`     | Redraw the chart, possibly changing `spec` and other parameters                     |
 
 Both methods expect a single argument respecting the following interfaces:
 
@@ -131,6 +143,10 @@ type ItemsOrPredicate = DataItem[] | ((item: DataItem) => boolean);
 //  should be selected, or `false` otherwise
 
 interface DataChange {
+  // An object that respects the `DataChange` interface will be used to create
+  // a `vega.changeset`. Please refer to `vega.view.change` documentation for
+  // more details.
+
   target: string;
   // ^ name of the data source being modified
 
@@ -158,18 +174,19 @@ interface Rerender {
   spec?: string | VegaSpec,
   // ^ New JSON object or URL with Vega/Vega-Lite spec
 
-  data?: string | DataItem[],
-  // ^ New values for named data sources in `spec` (data itself or URL to download it)
+  data?: DataItem[],
+  // ^ New values for named data sources in `spec`,
+  //   dynamically added via view.insert
 
   options?: EmbedOptions,
   // ^ New options for vega-embed
 }
 ```
 
-### Server-Sent Events
+### Remote Control
 
-As previously mentioned, it is possible to remotely drive changes in the visualisation,
-via [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
+As previously mentioned, it is possible to remotely drive changes in the visualization,
+via [server-sent events].
 Each server-sent event should correspond invoking either methods in the
 previous section: `change` or `rerender`.
 
@@ -177,7 +194,7 @@ The server should send events including payloads that respect the following
 interface:
 
 ```typescript
-type SsePayload = (
+type RemoteControl = (
   {event: "change", details: DataChange} |
   {event: "rerender", details: Rerender}
 )
@@ -247,7 +264,7 @@ To run the suite of Web Test Runner tests, run
 yarn run test
 ```
 
-To run the tests in watch mode (for &lt;abbr title=&#34;test driven development&#34;&gt;TDD&lt;/abbr&gt;, for example), run
+To run the tests in watch mode (for <abbr title="test driven development">TDD</abbr>, for example), run
 
 ```bash
 yarn run test:watch
@@ -274,3 +291,18 @@ If you customize the configuration a lot, you can consider moving them to indivi
 yarn start
 ```
 To run a local development server that serves the basic demo located in `demo/index.html`
+
+
+<!-- References -->
+[vega]: vega.github.io/vega/docs
+[vega-lite]: vega.github.io/vega-lite/docs
+[`vega-embed`]: https://github.com/vega/vega-embed
+[parameters]: https://github.com/vega/vega-embed#api-reference
+[vega or]: https://vega.github.io/vega/docs/specification
+[vega-lite JSON specification]: https://vega.github.io/vega-lite/docs/spec.html
+[options for `vega-embed`]: https://github.com/vega/vega-embed#options
+[`view.insert`]: https://vega.github.io/vega/docs/api/view/#view_insert
+[`view.change`]: https://vega.github.io/vega/docs/api/view/#view_change
+[*pure JSON objects*]: https://www.json.org
+[named data sources]: https://vega.github.io/vega-lite/docs/data.html#named
+[server-sent events]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
