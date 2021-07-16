@@ -1,6 +1,12 @@
 # \<vega-viewer>
 
-| **[UNDER DEVELOPMENT]** HTML custom element for displaying Vega/Vega-Lite visualisations
+| HTML custom element for displaying Vega/Vega-Lite visualisations
+
+**[UNDER DEVELOPMENT]**
+
+*Disclaimer*: `vega-viewer` is not officially developed or maintained by the
+[Vega organization]. It is only a third-party library that builds on top of
+[`vega`], [`vega-lite`] and [`vega-embed`].
 
 
 ## Installation
@@ -294,8 +300,9 @@ To run a local development server that serves the basic demo located in `demo/in
 
 
 <!-- References -->
-[vega]: vega.github.io/vega/docs
-[vega-lite]: vega.github.io/vega-lite/docs
+[Vega organisation]: https://github.com/vega
+[`vega`]: vega.github.io/vega/docs
+[`vega-lite`]: vega.github.io/vega-lite/docs
 [`vega-embed`]: https://github.com/vega/vega-embed
 [parameters]: https://github.com/vega/vega-embed#api-reference
 [vega or]: https://vega.github.io/vega/docs/specification
