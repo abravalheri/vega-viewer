@@ -301,8 +301,8 @@ To run a local development server that serves the basic demo located in `demo/in
 
 <!-- References -->
 [Vega organisation]: https://github.com/vega
-[`vega`]: vega.github.io/vega/docs
-[`vega-lite`]: vega.github.io/vega-lite/docs
+[`vega`]: https://vega.github.io/vega/docs
+[`vega-lite`]: https://vega.github.io/vega-lite/docs
 [`vega-embed`]: https://github.com/vega/vega-embed
 [parameters]: https://github.com/vega/vega-embed#api-reference
 [vega or]: https://vega.github.io/vega/docs/specification
