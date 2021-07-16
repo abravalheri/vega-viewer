@@ -1,6 +1,6 @@
 # \<vega-viewer>
 
-| HTML custom element for displaying Vega/Vega-Lite visualisations
+> HTML custom element for displaying Vega/Vega-Lite visualisations
 
 **[UNDER DEVELOPMENT]**
 
