@@ -86,26 +86,36 @@ export function spec(viewer: HTMLElement) {
 
 export async function data(viewer: HTMLElement) {
   // Consider both the `data` HTML attribute and the content of nested script elements
-  let value: string | any;
+  let values: string | any;
   let format: undefined | null | string;
   let name: undefined | string;
 
   if (viewer.hasAttribute('data')) {
     const response = await fetch(viewer.getAttribute('data')!);
-    value = await response.text();
+    values = await response.text();
     format = formatFromRoot(viewer);
     name = viewer.dataset.name;
   } else {
-    const child = ensureChildScript(viewer, 'data-value', 'data');
-    value = paramFromScript(child, 'data-value');
+    const child = ensureChildScript(viewer, 'data-values', 'data');
+    values = paramFromScript(child, 'data-values');
     format = formatFromScript(child);
     name = child.dataset.name;
 
-    if (format && !format.includes('json')) value = unindent(value); // vega.read does not recognise indented C|TSV
+    if (format && !format.includes('json')) values = unindent(values); // vega.read does not recognise indented C|TSV
   }
 
-  return {
-    name,
-    values: vega.read(value, { type: format as Format, parse: 'auto' }),
-  };
+  if (vega.isString(values))
+    values = vega.read(values, { type: format as Format, parse: 'auto' });
+
+  return { name, values };
+}
+
+export function options(viewer: HTMLElement) {
+  const child: null | HTMLScriptElement = viewer.querySelector(
+    'script[data-embed-options]'
+  );
+  if (!child) return {};
+  let value = paramFromScript(child!, 'data-embed-options');
+  if (vega.isString(value)) value = JSON.parse(value);
+  return value;
 }
