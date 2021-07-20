@@ -1,13 +1,13 @@
-import { property } from './property.js';
+import attr from './attr.js';
 
 export class VegaViewer extends HTMLElement {
-  @property spec: undefined | string;
+  @attr spec: undefined | string;
 
-  @property data: undefined | string;
+  @attr data: undefined | string;
 
-  @property embedOptions: undefined | string;
+  @attr embedOptions: undefined | string;
 
-  @property remoteControl: undefined | string;
+  @attr remoteControl: undefined | string;
 
   constructor() {
     super();

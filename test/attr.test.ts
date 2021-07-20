@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { fixture, expect, html } from '@open-wc/testing';
 
-import { dasherize, property } from '../src/property.js';
+import attr, { dasherize } from '../src/attr.js';
 
 describe('dasherize', () => {
   it('splits on capitals and join the lowercase version with dashes', () => {
@@ -11,11 +11,11 @@ describe('dasherize', () => {
   });
 });
 
-describe('property', () => {
+describe('attr', () => {
   class MyElement extends HTMLElement {
-    @property myattr: undefined | String;
+    @attr myattr: undefined | String;
 
-    @property dataMyattr: undefined | String;
+    @attr dataMyattr: undefined | String;
   }
 
   window.customElements.define('my-element', MyElement);
