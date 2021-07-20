@@ -95,7 +95,7 @@ Example:
 ```
 
 Please notice that the value of child `<script>` tags will be interpreted as
-[*pure JSON objects*], even if they don't explicit set the `type="application/json"`.
+[*pure JSON objects*] if they don't explicit set the `type="application/json"`.
 
 If a full-blown JavaScript object is absolutely required (e.g., `options` might
 need functions as properties), you can specify a function identifier as the

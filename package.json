@@ -20,13 +20,17 @@
     "storybook": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds -c .storybook/server.mjs\"",
     "storybook:build": "tsc && build-storybook"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vega": "5",
     "vega-embed": "6",
     "vega-expression": "4",
     "vega-lite": "5"
   },
   "devDependencies": {
+    "vega": "5",
+    "vega-embed": "6",
+    "vega-expression": "4",
+    "vega-lite": "5",
     "@open-wc/dev-server-hmr": "^0.1.1",
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "^2.5.33",

@@ -1,13 +1,13 @@
 import { property } from './property.js';
 
 export class VegaViewer extends HTMLElement {
-  @property spec: null | String = null;
+  @property spec: undefined | string;
 
-  @property data: null | String = null;
+  @property data: undefined | string;
 
-  @property stream: null | String = null;
+  @property embedOptions: undefined | string;
 
-  @property embedOptions: null | String = null;
+  @property remoteControl: undefined | string;
 
   constructor() {
     super();
