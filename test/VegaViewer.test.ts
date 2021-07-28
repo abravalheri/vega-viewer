@@ -22,3 +22,26 @@ describe('VegaViewer', () => {
     expect(el.data).to.equal(data);
   });
 });
+
+describe('render', () => {
+  it('creates a div#vega-embed element', async () => {
+    const el: VegaViewer = await fixture(html`<vega-viewer></vega-viewer>`);
+    el.render();
+    expect(el.shadowRoot!.querySelector('#vega-embed')).to.exist;
+  });
+
+  it('also accepts a custom template', async () => {
+    const el: VegaViewer = await fixture(html`
+      <vega-viewer>
+        <template>
+          <div id="vega-embed"></div>
+          <footer>custom template</footer>
+        </template>
+      </vega-viewer>
+    `);
+    el.render();
+    const footer = el.shadowRoot!.querySelector('footer');
+    expect(footer).to.exist;
+    expect(footer!.innerHTML).to.contain('custom template');
+  });
+});

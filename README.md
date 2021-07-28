@@ -209,11 +209,34 @@ type RemoteControl = (
 Please notice that the payload should be a strict JSON object, therefore
 serialised functions cannot be used.
 
+### Further Customisation
+
+In the case any HTML/CSS customisation is required, a `<template>` tag can be
+used as shown in the example bellow:
+
+```html
+<vega-viewer spec="https://localhost:8888/my-vega-lite-chart.json"
+             stream="https://localhost:8888/realtime-changes">
+
+  <template>
+    <style>* { color: red };</style>
+    <header>My chart</header>
+    <div id="vega-embed"></div>
+    <footer>rendered with Vega</footer>
+  </template>
+
+</vega-viewer>
+```
+
+A custom template is required to contain a HTML element matching the id
+query selector: `#vega-embed`.
+This element will be used to host the chart rendered by [`vega-embed`].
+
 
 ## Making Changes & Contributing
 
-`vega-viewer` development was bootstrap using [open-wc](https://github.com/open-wc/open-wc) 
-tools and recommendations, please check their docs for more information.
+`vega-viewer` development was bootstrap using [`open-wc`] tools and
+recommendations, please check their docs for more information.
 
 `yarn` (version 1) is used main tool driver, and custom commands are defined
 
@@ -313,3 +336,4 @@ To run a local development server that serves the basic demo located in `demo/in
 [*pure JSON objects*]: https://www.json.org
 [named data sources]: https://vega.github.io/vega-lite/docs/data.html#named
 [server-sent events]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
+[`open-wc`]: https://github.com/open-wc/open-wc
